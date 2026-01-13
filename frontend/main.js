@@ -29,7 +29,7 @@ const state = {
     messages: []
 }
 
-// Create a function to display all messages
+// Create a function to display messages sent through send button
 function displayMessages() {
     messageArea.innerHTML = "";
     state.messages.forEach(message => {
@@ -59,3 +59,9 @@ sendButton.addEventListener("click", () => {
             displayMessages(); 
     }
 })
+
+// Create a function to add messages from other users too and update UI with all messages
+function addMessage(message) {
+    state.messages.push(message);
+    displayMessages();
+}
