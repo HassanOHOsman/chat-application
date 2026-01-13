@@ -45,4 +45,5 @@ sendButton.addEventListener("click", () => {
     const content = messageInput.value;
     messages.push(content);
     content = "";
+    displayMessages();
 })
