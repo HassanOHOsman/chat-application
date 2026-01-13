@@ -34,5 +34,7 @@ function displayMessages() {
     messageArea.innerHTML = "";
     state.messages.forEach(message => {
         const userMessage = document.createElement("p");
-    })
+        userMessage.textContent = `${message.user}: ${message.content}`;
+        messageArea.append(userMessage);
+    });
 }
