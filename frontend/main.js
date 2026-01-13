@@ -12,3 +12,9 @@ rootContainer.append(usernameInput);
 const messageInput = document.createElement("textarea");
 messageInput.placeholder = "Enter your messages";
 rootContainer.append(messageInput);
+
+// Create button to send messsages 
+const sendButton = document.createElement("button");
+sendButton.textContent = "Send";
+rootContainer.append(sendButton);
+
