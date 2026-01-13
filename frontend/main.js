@@ -41,8 +41,8 @@ function displayMessages() {
 
 // Handle the send button click to display user and message
 sendButton.addEventListener("click", () => {
-    const user = usernameInput.value;
-    const content = messageInput.value;
+    let user = usernameInput.value;
+    let content = messageInput.value;
     state.messages.push(content);
     content = "";
     displayMessages();
