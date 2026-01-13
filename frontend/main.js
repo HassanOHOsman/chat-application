@@ -44,4 +44,5 @@ sendButton.addEventListener("click", () => {
     const user = usernameInput.value;
     const content = messageInput.value;
     messages.push(content);
+    content = "";
 })
