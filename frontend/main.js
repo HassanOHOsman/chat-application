@@ -22,3 +22,9 @@ rootContainer.append(sendButton);
 const messageArea = document.createElement("div");
 messageArea.id = "message-area";
 rootContainer.append(messageArea);
+
+
+// Create a state object, acting as a memoery, keep track of all messages and updating UI with new messages
+const state = {
+    messages: []
+}
