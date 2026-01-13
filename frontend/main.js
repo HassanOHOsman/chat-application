@@ -28,3 +28,11 @@ rootContainer.append(messageArea);
 const state = {
     messages: []
 }
+
+// Create a function to display all messages
+function displayMessages() {
+    messageArea.innerHTML = "";
+    state.messages.forEach(message => {
+        const userMessage = document.createElement("p");
+    })
+}
