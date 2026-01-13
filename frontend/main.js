@@ -43,6 +43,17 @@ function displayMessages() {
 sendButton.addEventListener("click", () => {
     let user = usernameInput.value;
     let content = messageInput.value;
+
+    if (!user && !content) {
+        alert("Please enter both a username and a message");  
+    } else if (!user) {
+        alert("Please enser a username");
+    } else if (!content) {
+        alert("Please enter a message");
+    } else {
+    
+    }
+
     state.messages.push({
         user: user,
         content: content
