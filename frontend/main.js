@@ -41,8 +41,8 @@ function displayMessages() {
 
 // Handle the send button click to display user and message
 sendButton.addEventListener("click", () => {
-    let user = usernameInput.value;
-    let content = messageInput.value;
+    let user = usernameInput.value.trim();
+    let content = messageInput.value.trim();
 
     if (!user && !content) {
         alert("Please enter both a username and a message");  
