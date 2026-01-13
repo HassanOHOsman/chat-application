@@ -38,3 +38,9 @@ function displayMessages() {
         messageArea.append(userMessage);
     });
 }
+
+// Handle the send button click to display user and message
+sendButton.addEventListener("click", () => {
+    const user = usernameInput.value;
+    const content = messageInput.value;
+})
