@@ -18,3 +18,7 @@ const sendButton = document.createElement("button");
 sendButton.textContent = "Send";
 rootContainer.append(sendButton);
 
+// Create container to display all messsages from all users 
+const messageArea = document.createElement("div");
+messageArea.id = "message-area";
+rootContainer.append(messageArea);
