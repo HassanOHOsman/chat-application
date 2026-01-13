@@ -55,7 +55,7 @@ sendButton.addEventListener("click", () => {
             user: user,
             content: content,
             });
-            content = "";
+            messageInput.value = "";
             displayMessages(); 
     }
 })
