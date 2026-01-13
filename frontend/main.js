@@ -7,3 +7,8 @@ document.body.append(rootContainer);
 const usernameInput = document.createElement("input");
 usernameInput.placeholder = "Enter your username";
 rootContainer.append(usernameInput);
+
+// Create textarea to add messsages 
+const messageInput = document.createElement("textarea");
+messageInput.placeholder = "Enter your messages";
+rootContainer.append(messageInput);
