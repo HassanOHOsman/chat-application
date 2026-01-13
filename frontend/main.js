@@ -43,7 +43,10 @@ function displayMessages() {
 sendButton.addEventListener("click", () => {
     let user = usernameInput.value;
     let content = messageInput.value;
-    state.messages.push(content);
+    state.messages.push({
+        user: user,
+        content: content
+    });
     content = "";
     displayMessages();
 })
