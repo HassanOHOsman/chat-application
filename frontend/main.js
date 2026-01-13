@@ -51,13 +51,11 @@ sendButton.addEventListener("click", () => {
     } else if (!content) {
         alert("Please enter a message");
     } else {
-    
+        state.messages.push({
+            user: user,
+            content: content,
+            });
+            content = "";
+            displayMessages(); 
     }
-
-    state.messages.push({
-        user: user,
-        content: content
-    });
-    content = "";
-    displayMessages();
 })
