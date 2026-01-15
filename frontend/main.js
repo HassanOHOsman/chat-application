@@ -53,8 +53,8 @@ sendButton.addEventListener("click", () => {
     } else {
         fetch("to be updated soon", {
             method: "POST",
-            headers {
-                "content-type": "application/json"
+            headers: {
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 user: user,
