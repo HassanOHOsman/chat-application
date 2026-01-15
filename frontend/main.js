@@ -39,6 +39,18 @@ function displayMessages() {
     });
 }
 
+// Build GET request to retrieve messages from server when the chat app is open
+window.addEventListener("load", () => {
+    fetch("backend endpoint will be here", { method: "GET" })
+      .then((response) => response.json())
+      .then((storedMessages) =>
+        storedMessages.forEach((message) => addMessage(message))
+      )
+      .catch((err) => console.error("Unable to retrieve message:", err));
+
+})
+
+
 // Handle the send button click to display user and message
 sendButton.addEventListener("click", () => {
     let user = usernameInput.value.trim();
