@@ -51,12 +51,19 @@ sendButton.addEventListener("click", () => {
     } else if (!content) {
         alert("Please enter a message");
     } else {
-        state.messages.push({
-            user: user,
-            content: content,
-            });
-            messageInput.value = "";
-            displayMessages(); 
+        fetch("to be updated soon", {
+            method: "POST",
+            headers {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify({
+                user: user,
+                content: content
+            })
+        })
+        .then(response => response.json())
+        .then(newMessage => addMessage(newMessage))
+        .catch(err => console.error("Unable to send message:", err));
     }
 })
 
