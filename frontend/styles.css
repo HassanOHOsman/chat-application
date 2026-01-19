@@ -29,11 +29,13 @@ body {
     border: 1px solid #ccc;
     box-sizing: border-box;
     font-size: 14px;
+    text-align: center;
 }
 
 #chat-app textarea {
     resize: none;
     height: 60px;
+    text-align: center;
 }
 
 /* Send button */
