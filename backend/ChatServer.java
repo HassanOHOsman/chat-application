@@ -77,6 +77,9 @@ public class ChatServer {
 
                             List<Message> newMessages = chatLogic.newMessages(since);
 
+                            exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*"); 
+                            exchange.getResponseHeaders().add("Content-Type", "application/json");
+
                             if (!newMessages.isEmpty()) {
                                 StringBuilder jsonArray = new StringBuilder("[");
                                 for (int i = 0; i < newMessages.size(); i++) {
