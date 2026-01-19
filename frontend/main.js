@@ -3,129 +3,122 @@ const rootContainer = document.createElement("div");
 rootContainer.id = "chat-app";
 document.body.append(rootContainer);
 
-// Create username input 
+// Create username input
 const usernameInput = document.createElement("input");
 usernameInput.placeholder = "Enter your username";
 rootContainer.append(usernameInput);
 
-// Create textarea to add messsages 
+// Create textarea to add messages
 const messageInput = document.createElement("textarea");
-messageInput.placeholder = "Enter your messages";
+messageInput.placeholder = "Enter your message";
 rootContainer.append(messageInput);
 
-// Create button to send messsages 
+// Create button to send messages
 const sendButton = document.createElement("button");
 sendButton.textContent = "Send";
 rootContainer.append(sendButton);
 
-// Create container to display all messsages from all users 
+// Create container to display all messages from all users
 const messageArea = document.createElement("div");
 messageArea.id = "message-area";
 rootContainer.append(messageArea);
 
-
-// Create a state object, acting as a memoery, keep track of all messages and updating UI with new messages
+// State object to keep track of messages
 const state = {
-    messages: []
-}
+  messages: [],
+};
 
-// Create a function to display messages sent through send button
+// Function to display all messages
 function displayMessages() {
-    messageArea.innerHTML = "";
-    state.messages.forEach(message => {
-        const userMessage = document.createElement("p");
-        userMessage.textContent = `${message.user}: ${message.content}`;
-        messageArea.append(userMessage);
-        
-    });
-
-    messageArea.scrollTop = messageArea.scrollHeight;
+  messageArea.innerHTML = "";
+  state.messages.forEach((message) => {
+    const userMessage = document.createElement("p");
+    userMessage.textContent = `${message.user}: ${message.content}`;
+    messageArea.append(userMessage);
+  });
+  messageArea.scrollTop = messageArea.scrollHeight;
 }
 
-// Track the most recent message
+// Function to add a message to state and update UI
+function addMessage(message) {
+  state.messages.push(message);
+  displayMessages();
+}
+
+// Track the most recent message timestamp
 let lastTimestamp = 0;
 
-function getNewMessages() {
-    fetch(`http://localhost:8080/messages?since=${lastTimestamp}`)
-        .then(response => {
-            if (response.status == 204) {
-                return [];
-            }
-            return response.json();
-        })
-        .then(newMessage => {
-            newMessage.forEach(message => addMessage(message));
+// Function to fetch new messages from the server (long-polling safe)
+async function getNewMessages() {
+  try {
+    const response = await fetch(
+      `http://localhost:8080/messages?since=${lastTimestamp}`
+    );
+    let newMessages = [];
 
-            if (newMessage.length > 0) {
-                lastTimestamp = newMessage[newMessage.length - 1].timestamp;
-            }
-
-            setTimeout(getNewMessages, 500);
-        })
-        .catch(error => {
-            console.error("Unable to fetch new messages:", error);
-
-            setTimeout(getNewMessages, 1000);
-        });
-}
-
-// Build GET request to retrieve messages from server when the chat app is open
-window.addEventListener("load", () => {
-    fetch("http://localhost:8080/messages?since=0", { method: "GET" })
-      .then((response) => {
-        if (response.status == 204) {
-          return [];
-        }
-        return response.json();
-      })
-      .then((storedMessages) => {
-        storedMessages.forEach((message) => addMessage(message));
-
-        if (storedMessages.length > 0) {
-            lastTimestamp = storedMessages[storedMessages.length - 1].timestamp;
-        }
-
-      })
-      .catch((err) => console.error("Unable to retrieve message:", err));
-
-      getNewMessages();
-
-})
-
-
-// Handle the send button click to display user and message
-sendButton.addEventListener("click", () => {
-    let user = usernameInput.value.trim();
-    let content = messageInput.value.trim();
-
-    if (!user && !content) {
-        alert("Please enter both a username and a message");  
-    } else if (!user) {
-        alert("Please enser a username");
-    } else if (!content) {
-        alert("Please enter a message");
-    } else {
-        fetch("http://localhost:8080/messages", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            user: user,
-            content: content,
-          }),
-        })
-          .then((response) => response.json())
-          .then(() => {
-            messageInput.value = "";
-
-          })
-          .catch((err) => console.error("Unable to send message:", err));
+    if (response.status !== 204) {
+      newMessages = await response.json();
     }
-})
 
-// Create a function to add messages from other users too and update UI with all messages
-function addMessage(message) {
-    state.messages.push(message);
-    displayMessages();
+    newMessages.forEach((message) => addMessage(message));
+
+    if (newMessages.length > 0) {
+      lastTimestamp = newMessages[newMessages.length - 1].timestamp;
+    }
+
+    // Poll again after 500ms
+    setTimeout(getNewMessages, 500);
+  } catch (err) {
+    console.error("Unable to fetch new messages:", err);
+    // Retry after 1 second if error occurs
+    setTimeout(getNewMessages, 1000);
+  }
 }
+
+// Load existing messages when the page opens
+window.addEventListener("load", async () => {
+  try {
+    const response = await fetch("http://localhost:8080/messages?since=0");
+    let storedMessages = [];
+
+    if (response.status !== 204) {
+      storedMessages = await response.json();
+    }
+
+    storedMessages.forEach((message) => addMessage(message));
+
+    if (storedMessages.length > 0) {
+      lastTimestamp = storedMessages[storedMessages.length - 1].timestamp;
+    }
+
+    // Start polling for new messages
+    getNewMessages();
+  } catch (err) {
+    console.error("Unable to retrieve messages:", err);
+  }
+});
+
+// Handle send button click
+sendButton.addEventListener("click", () => {
+  let user = usernameInput.value.trim();
+  let content = messageInput.value.trim();
+
+  if (!user && !content) {
+    alert("Please enter both a username and a message");
+  } else if (!user) {
+    alert("Please enter a username");
+  } else if (!content) {
+    alert("Please enter a message");
+  } else {
+    fetch("http://localhost:8080/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user, content }),
+    })
+      .then((response) => response.json())
+      .then(() => {
+        messageInput.value = "";
+      })
+      .catch((err) => console.error("Unable to send message:", err));
+  }
+});
