@@ -39,6 +39,28 @@ function displayMessages() {
     });
 }
 
+// Track the most recent message
+let lastTimestamp = 0;
+
+function getNewMessages() {
+    fetch(`http://localhost:8080/messages?since=${lastTimestamp}`)
+        .then(response => response.json())
+        .then(newMessage => {
+            newMessage.forEach(message => addMessage(message));
+
+            if (newMessage.length > 0) {
+                lastTimestamp = newMessage[newMessage.length - 1].timestamp;
+            }
+
+            getNewMessages();
+        })
+        .catch(error => {
+            console.error("Unable to fetch new messages:", error);
+
+            setTimeout(getNewMessages, 1000);
+        });
+}
+
 // Build GET request to retrieve messages from server when the chat app is open
 window.addEventListener("load", () => {
     fetch("http://localhost:8080/messages", { method: "GET" })
