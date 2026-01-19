@@ -63,19 +63,19 @@ sendButton.addEventListener("click", () => {
     } else if (!content) {
         alert("Please enter a message");
     } else {
-        fetch("to be updated soon", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                user: user,
-                content: content
-            })
+        fetch("http://localhost:8080/messages", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            user: user,
+            content: content,
+          }),
         })
-        .then(response => response.json())
-        .then(newMessage => addMessage(newMessage))
-        .catch(err => console.error("Unable to send message:", err));
+          .then((response) => response.json())
+          .then((newMessage) => addMessage(newMessage))
+          .catch((err) => console.error("Unable to send message:", err));
     }
 })
 
