@@ -70,6 +70,8 @@ window.addEventListener("load", () => {
       )
       .catch((err) => console.error("Unable to retrieve message:", err));
 
+      getNewMessages();
+
 })
 
 
