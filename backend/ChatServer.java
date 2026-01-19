@@ -26,6 +26,7 @@ public class ChatServer {
                         String method = exchange.getRequestMethod();
 
                         if (method.equalsIgnoreCase("OPTIONS")) {
+                            exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
                             exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
                             exchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type");
                             exchange.sendResponseHeaders(204, -1);
@@ -92,6 +93,7 @@ public class ChatServer {
                                 }
                                 jsonArray.append("]");
 
+                                exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
                                 exchange.getResponseHeaders().add("Content-Type", "application/json");
                                 exchange.sendResponseHeaders(200, jsonArray.toString().getBytes().length);
                                 OutputStream os = exchange.getResponseBody();
@@ -105,6 +107,7 @@ public class ChatServer {
                                     try {
                                         Thread.sleep(30000); 
                                         if (waitingExchanges.remove(exchange)) {
+                                            exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
                                             exchange.sendResponseHeaders(204, -1); 
                                             exchange.close();
                                         }
