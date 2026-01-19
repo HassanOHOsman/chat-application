@@ -67,7 +67,7 @@ async function getNewMessages() {
     }
 
     // Poll again after 500ms
-    setTimeout(getNewMessages, 500);
+    setTimeout(getNewMessages, 0);
   } catch (err) {
     console.error("Unable to fetch new messages:", err);
     // Retry after 1 second if error occurs
