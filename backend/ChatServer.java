@@ -9,6 +9,8 @@ import java.net.InetSocketAddress;
 
 
 public class ChatServer {
+    
+    private static ChatLogic chatLogic = new ChatLogic();
     public static void main(String[] args) {
         try {
     
