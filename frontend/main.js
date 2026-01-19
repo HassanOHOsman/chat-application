@@ -39,7 +39,7 @@ function displayMessages() {
         
     });
 
-    message.scrollTop = messageArea.scrollHeight;
+    messageArea.scrollTop = messageArea.scrollHeight;
 }
 
 // Track the most recent message
@@ -55,7 +55,7 @@ function getNewMessages() {
                 lastTimestamp = newMessage[newMessage.length - 1].timestamp;
             }
 
-            getNewMessages();
+            setTimeout(getNewMessages, 500);
         })
         .catch(error => {
             console.error("Unable to fetch new messages:", error);
