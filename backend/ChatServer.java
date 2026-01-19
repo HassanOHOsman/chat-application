@@ -11,10 +11,9 @@ import java.net.InetSocketAddress;
 public class ChatServer {
     public static void main(String[] args) {
         try {
-    // Create a server on port 8080
+    
     HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
 
-    // For now, add a simple /messages handler
     server.createContext("/messages", new HttpHandler() {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
@@ -26,7 +25,7 @@ public class ChatServer {
         }
     });
 
-    server.setExecutor(null); // creates a default executor
+    server.setExecutor(null);
     server.start();
     System.out.println("Server running on http://localhost:8080");
 
