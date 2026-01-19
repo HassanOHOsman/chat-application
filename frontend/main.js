@@ -82,7 +82,9 @@ window.addEventListener("load", async () => {
     let storedMessages = [];
 
     if (response.status !== 204) {
-      storedMessages = await response.json();
+      const data = await response.json();
+
+      storedMessages = Array.isArray(data) ? data : [data];
     }
 
     storedMessages.forEach((message) => addMessage(message));
