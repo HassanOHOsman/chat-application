@@ -41,7 +41,7 @@ function displayMessages() {
 
 // Build GET request to retrieve messages from server when the chat app is open
 window.addEventListener("load", () => {
-    fetch("backend endpoint will be here", { method: "GET" })
+    fetch("http://localhost:8080/messages", { method: "GET" })
       .then((response) => response.json())
       .then((storedMessages) =>
         storedMessages.forEach((message) => addMessage(message))
