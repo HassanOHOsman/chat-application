@@ -6,6 +6,7 @@ document.body.append(rootContainer);
 // Create title for the chat app
 const appTitle = document.createElement("h1");
 appTitle.textContent = "QuickChat";
+appTitle.id = "app-title";
 rootContainer.append(appTitle);
 
 // Create username input

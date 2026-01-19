@@ -20,6 +20,14 @@ body {
     gap: 10px;
 }
 
+/* Chat App Title */
+#app-title {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #333;
+
+}
+
 /* Inputs and textarea */
 #chat-app input,
 #chat-app textarea {
