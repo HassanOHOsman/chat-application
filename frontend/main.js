@@ -36,8 +36,10 @@ function displayMessages() {
         const userMessage = document.createElement("p");
         userMessage.textContent = `${message.user}: ${message.content}`;
         messageArea.append(userMessage);
-        message.scrollTop = messageArea.scrollHeight;
+        
     });
+
+    message.scrollTop = messageArea.scrollHeight;
 }
 
 // Track the most recent message
