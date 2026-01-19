@@ -19,17 +19,18 @@ public class ChatServer {
             server.createContext("/messages", new HttpHandler() {
                 @Override
                 public void handle(HttpExchange exchange) throws IOException {
+            
+                    exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+
                     try {
-        
-                        if (exchange.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
-                            exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+                        String method = exchange.getRequestMethod();
+
+                        if (method.equalsIgnoreCase("OPTIONS")) {
                             exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
                             exchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type");
-                            exchange.sendResponseHeaders(204, -1); 
+                            exchange.sendResponseHeaders(204, -1);
                             return;
                         }
-
-                        String method = exchange.getRequestMethod();
 
                         if (method.equalsIgnoreCase("POST")) {
                             String body = new String(exchange.getRequestBody().readAllBytes());
@@ -39,28 +40,35 @@ public class ChatServer {
                             chatLogic.addMessage(user, content);
 
                             String jsonResponse = String.format(
-                                "{\"user\":\"%s\",\"content\":\"%s\",\"timestamp\":%d}",
-                                user, content, System.currentTimeMillis()
+                                    "{\"user\":\"%s\",\"content\":\"%s\",\"timestamp\":%d}",
+                                    user, content, System.currentTimeMillis()
                             );
 
-                            exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
                             exchange.getResponseHeaders().add("Content-Type", "application/json");
                             exchange.sendResponseHeaders(200, jsonResponse.getBytes().length);
                             OutputStream os = exchange.getResponseBody();
                             os.write(jsonResponse.getBytes());
                             os.close();
 
+                            List<HttpExchange> toRemove = new ArrayList<>();
                             for (HttpExchange waiting : waitingExchanges) {
-                                waiting.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
-                                waiting.getResponseHeaders().add("Content-Type", "application/json");
-                                waiting.sendResponseHeaders(200, jsonResponse.getBytes().length);
-                                OutputStream wOs = waiting.getResponseBody();
-                                wOs.write(jsonResponse.getBytes());
-                                wOs.close();
+                                try {
+                                    waiting.getResponseHeaders().add("Content-Type", "application/json");
+                                    waiting.sendResponseHeaders(200, jsonResponse.getBytes().length);
+                                    OutputStream wOs = waiting.getResponseBody();
+                                    wOs.write(jsonResponse.getBytes());
+                                    wOs.close();
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                    toRemove.add(waiting);
+                                }
                             }
+                            waitingExchanges.removeAll(toRemove);
                             waitingExchanges.clear();
 
-                        } else if (method.equalsIgnoreCase("GET")) {
+                        } 
+                    
+                        else if (method.equalsIgnoreCase("GET")) {
                             String query = exchange.getRequestURI().getQuery();
                             long since = 0;
                             if (query != null && query.startsWith("since=")) {
@@ -74,34 +82,45 @@ public class ChatServer {
                                 for (int i = 0; i < newMessages.size(); i++) {
                                     Message m = newMessages.get(i);
                                     jsonArray.append(String.format(
-                                        "{\"user\":\"%s\",\"content\":\"%s\",\"timestamp\":%d}",
-                                        m.getUser(), m.getContent(), m.getTimestamp()
+                                            "{\"user\":\"%s\",\"content\":\"%s\",\"timestamp\":%d}",
+                                            m.getUser(), m.getContent(), m.getTimestamp()
                                     ));
                                     if (i < newMessages.size() - 1) jsonArray.append(",");
                                 }
                                 jsonArray.append("]");
 
-                                exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
                                 exchange.getResponseHeaders().add("Content-Type", "application/json");
                                 exchange.sendResponseHeaders(200, jsonArray.toString().getBytes().length);
                                 OutputStream os = exchange.getResponseBody();
                                 os.write(jsonArray.toString().getBytes());
                                 os.close();
                             } else {
-                    
+
                                 waitingExchanges.add(exchange);
+
+                                new Thread(() -> {
+                                    try {
+                                        Thread.sleep(30000); 
+                                        if (waitingExchanges.remove(exchange)) {
+                                            exchange.sendResponseHeaders(204, -1); 
+                                            exchange.close();
+                                        }
+                                    } catch (Exception ignored) {}
+                                }).start();
                             }
-                        } else {
-                            exchange.sendResponseHeaders(405, -1); 
+                        } 
+                        else {
+                            exchange.sendResponseHeaders(405, -1);
+                        }
 
                     } catch (Exception e) {
                         e.printStackTrace();
-                        exchange.sendResponseHeaders(500, -1); 
+                        exchange.sendResponseHeaders(500, -1);
                     }
                 }
             });
 
-            server.setExecutor(null); 
+            server.setExecutor(null);
             server.start();
             System.out.println("Server running on http://localhost:8080");
 
