@@ -3,6 +3,11 @@ const rootContainer = document.createElement("div");
 rootContainer.id = "chat-app";
 document.body.append(rootContainer);
 
+// Create title for the chat app
+const appTitle = document.createElement("h1");
+appTitle.textContent = "QuickChat";
+rootContainer.append(appTitle);
+
 // Create username input
 const usernameInput = document.createElement("input");
 usernameInput.placeholder = "Enter your username";
