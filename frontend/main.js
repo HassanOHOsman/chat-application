@@ -24,6 +24,13 @@ const sendButton = document.createElement("button");
 sendButton.textContent = "Send";
 rootContainer.append(sendButton);
 
+// Create button to make words bold
+const boldMessageBtn = document.createElement("button");
+boldMessageBtn.textContent = "Bold";
+rootContainer.append(boldMessageBtn);
+
+
+
 // Create container to display all messages from all users
 const messageArea = document.createElement("div");
 messageArea.id = "message-area";
