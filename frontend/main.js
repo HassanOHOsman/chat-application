@@ -30,9 +30,9 @@ boldButton.textContent = "Bold";
 rootContainer.append(boldButton);
 
 // Create button to make words italic
-const boldMessageBtn = document.createElement("button");
-boldMessageBtn.textContent = "Bold";
-rootContainer.append(boldMessageBtn);
+const italicButton = document.createElement("button");
+italicButton.textContent = "Italic";
+rootContainer.append(italicButton);
 
 
 
