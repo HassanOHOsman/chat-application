@@ -25,6 +25,11 @@ sendButton.textContent = "Send";
 rootContainer.append(sendButton);
 
 // Create button to make words bold
+const boldButton = document.createElement("button");
+boldButton.textContent = "Bold";
+rootContainer.append(boldButton);
+
+// Create button to make words italic
 const boldMessageBtn = document.createElement("button");
 boldMessageBtn.textContent = "Bold";
 rootContainer.append(boldMessageBtn);
