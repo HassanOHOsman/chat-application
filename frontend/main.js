@@ -34,7 +34,10 @@ const italicButton = document.createElement("button");
 italicButton.textContent = "Italic";
 rootContainer.append(italicButton);
 
-
+// Create button to make words underlined
+const underlinedButton = document.createElement("button");
+underlinedButton.textContent = "Underline";
+rootContainer.append(underlinedButton);
 
 // Create container to display all messages from all users
 const messageArea = document.createElement("div");
