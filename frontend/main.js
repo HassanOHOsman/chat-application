@@ -57,6 +57,8 @@ underlinedButton.addEventListener("click", () => formatSelectedWord("__"));
 function formatSelectedWord(wrapper) {
   const start = messageInput.selectionStart;
   const end = messageInput.selectionEnd;
+  if (start == end) return;
+  
   const text = messageInput.value;
   const selected = text.slice(start, end);
 
