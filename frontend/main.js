@@ -28,19 +28,26 @@ rootContainer.append(sendButton);
 const boldButton = document.createElement("button");
 boldButton.id = "bold-btn";
 boldButton.textContent = "B";
-rootContainer.append(boldButton);
 
 // Create button to make words italic
 const italicButton = document.createElement("button");
 italicButton.id = "italic-btn";
 italicButton.textContent = "𝑰";
-rootContainer.append(italicButton);
 
 // Create button to make words underlined
 const underlinedButton = document.createElement("button");
 underlinedButton.id = "underline-btn";
 underlinedButton.textContent = "U̲";
-rootContainer.append(underlinedButton);
+
+// Create text-formatting toolbar
+const textFormatBar = document.createElement("div");
+textFormatBar.id = "format-bar";
+
+textFormatBar.append(boldButton);
+textFormatBar.append(italicButton);
+textFormatBar.append(underlinedButton);
+
+rootContainer.append(textFormatBar);
 
 // Create container to display all messages from all users
 const messageArea = document.createElement("div");
