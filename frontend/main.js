@@ -26,16 +26,19 @@ rootContainer.append(sendButton);
 
 // Create button to make words bold
 const boldButton = document.createElement("button");
+boldButton.id = "bold-btn";
 boldButton.textContent = "Bold";
 rootContainer.append(boldButton);
 
 // Create button to make words italic
 const italicButton = document.createElement("button");
+italicButton.id = "italic-btn";
 italicButton.textContent = "Italic";
 rootContainer.append(italicButton);
 
 // Create button to make words underlined
 const underlinedButton = document.createElement("button");
+underlinedButton.id = "underline-btn";
 underlinedButton.textContent = "Underline";
 rootContainer.append(underlinedButton);
 
