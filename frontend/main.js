@@ -49,6 +49,13 @@ const state = {
   messages: [],
 };
 
+// UI helper for user so that words are made bold, italic or underlined
+boldButton.addEventListener("click", () => wrapSelection("**"));
+italicButton.addEventListener("click", () => wrapSelection("*"));
+underlinedButton.addEventListener("click", () => wrapSelection("__"));
+
+
+
 // Build a function that format message (option to make some words bold, italic, or underlined)
 
 function messageFormatter(text) {
