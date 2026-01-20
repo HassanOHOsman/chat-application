@@ -50,9 +50,26 @@ const state = {
 };
 
 // UI helper for user so that words are made bold, italic or underlined
-boldButton.addEventListener("click", () => wrapSelection("**"));
-italicButton.addEventListener("click", () => wrapSelection("*"));
-underlinedButton.addEventListener("click", () => wrapSelection("__"));
+boldButton.addEventListener("click", () => formatSelectedWord("**"));
+italicButton.addEventListener("click", () => formatSelectedWord("*"));
+underlinedButton.addEventListener("click", () => formatSelectedWord("__"));
+
+function formatSelectedWord(wrapper) {
+  const start = messageInput.selectionStart;
+  const end = messageInput.selectionEnd;
+  const text = messageInput.value;
+  const selected = text.slice(start, end);
+
+  const before = text.slice(0, start);
+  const after = text.slice(end);
+
+  messageInput.value = before + wrapper + selected + wrapper + after;
+
+  // Put cursor after the newly added wrapper
+  messageInput.selectionStart = start + wrapper.length;
+  messageInput.selectionEnd = end + wrapper.length;
+  messageInput.focus();
+}
 
 
 
