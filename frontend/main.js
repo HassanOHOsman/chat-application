@@ -34,12 +34,30 @@ const state = {
   messages: [],
 };
 
+// Build a function that format message (option to make some words bold, italic, or underlined)
+
+function messageFormatter(text) {
+  let formattedMessage = text;
+
+  //Make bold
+  formattedMessage = formattedMessage.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+
+  // Make italic
+  formattedMessage = formattedMessage.replace(/\*(.*?)\*/g, "<em>$1</em>");
+
+  //Make underlined
+  formattedMessage = formattedMessage.replace(/__(.*?)__/g, "<u>$1</u>");
+
+  return formattedMessage;
+
+}
+
 // Function to display all messages
 function displayMessages() {
   messageArea.innerHTML = "";
   state.messages.forEach((message) => {
     const userMessage = document.createElement("p");
-    userMessage.textContent = `${message.user}: ${message.content}`;
+    userMessage.innerHTML = `<strong>${message.user}:</strong> ${messageFormatter(message.content)}`;
     messageArea.append(userMessage);
   });
   messageArea.scrollTop = messageArea.scrollHeight;
@@ -73,7 +91,7 @@ async function getNewMessages() {
     }
 
     // Poll again after 500ms
-    setTimeout(getNewMessages, 0);
+    setTimeout(getNewMessages, 50);
   } catch (err) {
     console.error("Unable to fetch new messages:", err);
     // Retry after 1 second if error occurs
