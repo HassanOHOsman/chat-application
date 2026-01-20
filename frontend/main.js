@@ -27,19 +27,19 @@ rootContainer.append(sendButton);
 // Create button to make words bold
 const boldButton = document.createElement("button");
 boldButton.id = "bold-btn";
-boldButton.textContent = "Bold";
+boldButton.textContent = "B";
 rootContainer.append(boldButton);
 
 // Create button to make words italic
 const italicButton = document.createElement("button");
 italicButton.id = "italic-btn";
-italicButton.textContent = "Italic";
+italicButton.textContent = "𝑰";
 rootContainer.append(italicButton);
 
 // Create button to make words underlined
 const underlinedButton = document.createElement("button");
 underlinedButton.id = "underline-btn";
-underlinedButton.textContent = "Underline";
+underlinedButton.textContent = "U̲";
 rootContainer.append(underlinedButton);
 
 // Create container to display all messages from all users
