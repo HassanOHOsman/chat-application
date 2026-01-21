@@ -1,8 +1,8 @@
-# Use Java 25 base image
-FROM openjdk:21
+# Use Java 17 LTS base image
+FROM openjdk:17-jdk-slim
 
 # Set working directory inside the container
-WORKDIR /app
+WORKDIR /chat-application
 
 # Copy all your Java files into the container
 COPY . .
