@@ -4,3 +4,11 @@
 # macOS
 .DS_Store
 
+
+# Ignore all compiled Java classes
+*.class
+
+# Optional: ignore other build artifacts
+*.jar
+*.war
+*.log
