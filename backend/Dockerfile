@@ -1,15 +1,14 @@
-# Use Java 17 LTS base image
-FROM openjdk:17-jdk-slim
+# Use a valid Java 17 slim base image
+FROM eclipse-temurin:17-jdk
 
 # Set working directory inside the container
 WORKDIR /chat-application
 
-# Copy all your Java files into the container
+# Copy all your Java files
 COPY . .
 
-# Compile the Java files
-RUN javac *.java
+# Compile all Java files recursively
+RUN javac $(find . -name "*.java")
 
-# Run the main class (replace Main with your actual main class name)
+# Run the main class
 CMD ["java", "ChatServer"]
-
