@@ -1,19 +1,24 @@
 // Message.java
 public class Message {
-    private String sender;
+    private String user;       // matches your ChatServer expectations
     private String content;
     private long timestamp;
 
-    // Constructor
-    public Message(String sender, String content) {
-        this.sender = sender;
+    // Constructor with all three parameters
+    public Message(String user, String content, long timestamp) {
+        this.user = user;
         this.content = content;
-        this.timestamp = System.currentTimeMillis(); // time in milliseconds
+        this.timestamp = timestamp;
+    }
+
+    // Optional: constructor without timestamp (auto-set to now)
+    public Message(String user, String content) {
+        this(user, content, System.currentTimeMillis());
     }
 
     // Getters
-    public String getSender() {
-        return sender;
+    public String getUser() {
+        return user;
     }
 
     public String getContent() {
@@ -24,19 +29,22 @@ public class Message {
         return timestamp;
     }
 
-    // Setters (if you want messages to be mutable)
-    public void setSender(String sender) {
-        this.sender = sender;
+    // Setters if needed
+    public void setUser(String user) {
+        this.user = user;
     }
 
     public void setContent(String content) {
         this.content = content;
     }
 
-    // Optional: override toString for easier logging
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    // Optional: easier logging
     @Override
     public String toString() {
-        return "[" + timestamp + "] " + sender + ": " + content;
+        return "[" + timestamp + "] " + user + ": " + content;
     }
 }
-
