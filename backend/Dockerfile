@@ -2,7 +2,7 @@
 FROM eclipse-temurin:17-jdk
 
 # Set working directory inside the container
-WORKDIR /chat-application
+WORKDIR /backend
 
 # Copy all your Java files
 COPY . .
