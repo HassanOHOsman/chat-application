@@ -44,7 +44,7 @@ public class ChatServerWebSocket extends WebSocketServer {
 
     @Override
     public void onError(WebSocket connection, Exception ex) {
-        System.out.println("Error: " + ex.getMessage());
+        System.err.println("Error: " + ex.getMessage());
     }
 
 
