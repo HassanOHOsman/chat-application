@@ -49,7 +49,7 @@ public class ChatServerWebSocket extends WebSocketServer {
 
     public static void main(String[] args) {
 
-        int port 8081;
+        int port = 8081;
         ChatServerWebSocket server = new ChatServerWebSocket(port);
         server.start();
         
