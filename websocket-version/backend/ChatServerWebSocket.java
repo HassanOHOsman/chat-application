@@ -9,7 +9,9 @@ import java.util.Set;
 
 
 
-public class ChatServerWebSocket {
+public class ChatServerWebSocket extends WebSocketServer {
+
+    private Set<WebSocket> clients = Collections.synchronizedSet(new HashSet<>());
 
     public static void main(String[] args) {
         
