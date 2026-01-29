@@ -47,8 +47,11 @@ public class ChatServerWebSocket extends WebSocketServer {
         System.err.println("Error: " + ex.getMessage());
     }
 
-
     public static void main(String[] args) {
+
+        int port 8081;
+        ChatServerWebSocket server = new ChatServerWebSocket(port);
+        server.start();
         
     }
 }
