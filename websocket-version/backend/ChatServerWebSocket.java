@@ -17,7 +17,12 @@ public class ChatServerWebSocket extends WebSocketServer {
         super(new InetSocketAddress(port));
     }
 
+    @Override
+    public void onOpen(WebSocket connection, ClientHandshake handshake) {
+        clients.add(conn);
+        System.out.println("New connection from " + connection.getRemoteSocketAddress());
 
+    }
 
 
     public static void main(String[] args) {
