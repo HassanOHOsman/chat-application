@@ -13,6 +13,13 @@ public class ChatServerWebSocket extends WebSocketServer {
 
     private Set<WebSocket> clients = Collections.synchronizedSet(new HashSet<>());
 
+    public ChatServerWebSocket (int port) {
+        super(new InetSocketAddress(port));
+    }
+
+
+
+
     public static void main(String[] args) {
         
     }
