@@ -19,8 +19,15 @@ public class ChatServerWebSocket extends WebSocketServer {
 
     @Override
     public void onOpen(WebSocket connection, ClientHandshake handshake) {
-        clients.add(conn);
+        clients.add(connection);
         System.out.println("New connection from " + connection.getRemoteSocketAddress());
+
+    }
+
+    @Override
+    public void onClose(WebSocket connection, int code, String reason, boolean remote) {
+        clients.remove(connection);
+        System.out.println(connection.getRemoteSocketAddress() + " closed connection");
 
     }
 
