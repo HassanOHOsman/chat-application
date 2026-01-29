@@ -31,6 +31,17 @@ public class ChatServerWebSocket extends WebSocketServer {
 
     }
 
+    @Override
+    public void onMessage(WebSocket connection, String message) {
+        System.out.println("Recieved message: " + message);
+
+        synchronized (clients) {
+            for (WebSocket client : clients) {
+                client.send(message);
+            }
+        }
+    }
+
 
     public static void main(String[] args) {
         
