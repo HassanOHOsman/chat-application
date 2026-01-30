@@ -59,6 +59,8 @@ const state = {
   messages: [],
 };
 
+const socket = new WebSocket("ws://localhost:8081");
+
 // UI helper for user so that words are made bold, italic or underlined
 boldButton.addEventListener("click", () => formatSelectedWord("**"));
 italicButton.addEventListener("click", () => formatSelectedWord("*"));
