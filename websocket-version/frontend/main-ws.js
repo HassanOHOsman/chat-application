@@ -129,9 +129,7 @@ function displayMessages() {
   messageArea.innerHTML = "";
   state.messages.forEach((message) => {
     const userMessage = document.createElement("p");
-    userMessage.innerHTML = `<strong>${
-      message.user
-    }:</strong> ${messageFormatter(message.content)}`;
+    userMessage.innerHTML = `<strong>${message.user}:</strong> [${message.timestamp}]: ${messageFormatter(message.content)}`;
     messageArea.append(userMessage);
   });
   messageArea.scrollTop = messageArea.scrollHeight;
@@ -164,6 +162,7 @@ sendButton.addEventListener("click", () => {
   const message = {
     user,
     content,
+    timestamp: new Date().toLocaleTimeString()
   };
 
   socket.send(JSON.stringify(message));
