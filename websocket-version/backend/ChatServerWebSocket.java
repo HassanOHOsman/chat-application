@@ -18,6 +18,11 @@ public class ChatServerWebSocket extends WebSocketServer {
     }
 
     @Override
+    public void onStart() {
+        System.out.println("Websocket server started on: " + getPort());
+    }
+
+    @Override
     public void onOpen(WebSocket connection, ClientHandshake handshake) {
         clients.add(connection);
         System.out.println("New connection from " + connection.getRemoteSocketAddress());
