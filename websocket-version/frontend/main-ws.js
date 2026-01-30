@@ -122,60 +122,8 @@ function addMessage(message) {
   displayMessages();
 }
 
-// Track the most recent message timestamp
-let lastTimestamp = 0;
 
-// Function to fetch new messages from the server (long-polling safe)
-async function getNewMessages() {
-  try {
-    const response = await fetch(
-      `http://localhost:8080/messages?since=${lastTimestamp}`
-    );
-    let newMessages = [];
 
-    if (response.status !== 204) {
-      newMessages = await response.json();
-    }
-
-    newMessages.forEach((message) => addMessage(message));
-
-    if (newMessages.length > 0) {
-      lastTimestamp = newMessages[newMessages.length - 1].timestamp;
-    }
-
-    // Poll again after 500ms
-    setTimeout(getNewMessages, 0);
-  } catch (err) {
-    console.error("Unable to fetch new messages:", err);
-    // Retry after 1 second if error occurs
-    setTimeout(getNewMessages, 1000);
-  }
-}
-
-// Load existing messages when the page opens
-window.addEventListener("load", async () => {
-  try {
-    const response = await fetch("http://localhost:8080/messages?since=0");
-    let storedMessages = [];
-
-    if (response.status !== 204) {
-      const data = await response.json();
-
-      storedMessages = Array.isArray(data) ? data : [data];
-    }
-
-    storedMessages.forEach((message) => addMessage(message));
-
-    if (storedMessages.length > 0) {
-      lastTimestamp = storedMessages[storedMessages.length - 1].timestamp;
-    }
-
-    // Start polling for new messages
-    getNewMessages();
-  } catch (err) {
-    console.error("Unable to retrieve messages:", err);
-  }
-});
 
 // Handle send button click
 sendButton.addEventListener("click", () => {
