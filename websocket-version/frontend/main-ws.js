@@ -71,7 +71,14 @@ socket.onclose = () => {
 
 socket.onerror = (err) => {
   console.error("Error: ", err);
+};  
+
+socket.onmessage = (event) => {
+  const message = JSON.parse(event.data);
+  addMessage(message);
 };
+
+
 
 // UI helper for user so that words are made bold, italic or underlined
 boldButton.addEventListener("click", () => formatSelectedWord("**"));
@@ -138,7 +145,6 @@ function addMessage(message) {
 
 
 
-
 // Handle send button click
 sendButton.addEventListener("click", () => {
   let user = usernameInput.value.trim();
@@ -146,20 +152,20 @@ sendButton.addEventListener("click", () => {
 
   if (!user && !content) {
     alert("Please enter both a username and a message");
+    return;
   } else if (!user) {
     alert("Please enter a username");
+    return;
   } else if (!content) {
     alert("Please enter a message");
-  } else {
-    fetch("http://localhost:8080/messages", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ user, content }),
-    })
-      .then((response) => response.json())
-      .then(() => {
-        messageInput.value = "";
-      })
-      .catch((err) => console.error("Unable to send message:", err));
-  }
+    return;
+  } 
+
+  const message = {
+    user,
+    content,
+  };
+
+  socket.send(JSON.stringify(message));
+  messageInput.value = "";
 });
