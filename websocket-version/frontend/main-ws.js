@@ -61,6 +61,18 @@ const state = {
 
 const socket = new WebSocket("ws://localhost:8081");
 
+socket.onopen = () => {
+  console.log("Connected to websocket server");
+}
+
+socket.onclose = () => {
+  console.log("Disconnected from websocket server");
+};
+
+socket.onerror = (err) => {
+  console.error("Error: ", err);
+};
+
 // UI helper for user so that words are made bold, italic or underlined
 boldButton.addEventListener("click", () => formatSelectedWord("**"));
 italicButton.addEventListener("click", () => formatSelectedWord("*"));
