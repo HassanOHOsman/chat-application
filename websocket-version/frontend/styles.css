@@ -129,14 +129,14 @@ body {
 
 #message-area p {
     display: flex;
-    justify-content: flex-start; /* start from left */
+    justify-content: flex-start;
     align-items: flex-start;
     margin: 0;
     padding: 5px 10px;
     border-radius: 5px;
     background-color: #e0e0e0;
     word-wrap: break-word;
-    width: 100%; /* ensure full width */
+    width: 100%; 
     box-sizing: border-box;
 }
 
@@ -151,7 +151,7 @@ body {
     display: flex;
     flex-direction: row;
     gap: 5px;
-    flex: 1; /* takes remaining space */
+    flex: 1; 
 }
 
 /* Username styling */
