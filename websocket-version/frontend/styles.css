@@ -126,3 +126,48 @@ body {
     background-color: #d1ffd6;
     align-self: flex-end;
 }
+
+#message-area p {
+    display: flex;
+    justify-content: flex-start; /* start from left */
+    align-items: flex-start;
+    margin: 0;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #e0e0e0;
+    word-wrap: break-word;
+    width: 100%; /* ensure full width */
+    box-sizing: border-box;
+}
+
+/* Own messages highlighted */
+#message-area p.self {
+    background-color: #d1ffd6;
+    align-self: flex-end;
+}
+
+/* Left block (username + content) */
+.chat-left {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    flex: 1; /* takes remaining space */
+}
+
+/* Username styling */
+.chat-user {
+    font-weight: bold;
+}
+
+/* Message content */
+.chat-content {
+    word-wrap: break-word;
+}
+
+/* Timestamp styling */
+.chat-time {
+    color: gray;
+    font-size: 0.75em;
+    margin-left: 10px;
+    white-space: nowrap;
+}

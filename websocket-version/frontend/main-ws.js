@@ -143,9 +143,11 @@ function displayMessages() {
   state.messages.forEach((message) => {
     const userMessage = document.createElement("p");
     userMessage.innerHTML = `
-      <strong>${message.user}:</strong>
-      [${formatTime(message.timestamp)}]:
-      ${messageFormatter(message.content)}
+      <span class="chat-left">
+        <span class="chat-user">${message.user}:</span>
+        <span class="chat-content">${messageFormatter(message.content)}</span>
+      </span>
+      <span class="chat-time">${formatTime(message.timestamp)}</span>
     `;
     messageArea.append(userMessage);
   });
