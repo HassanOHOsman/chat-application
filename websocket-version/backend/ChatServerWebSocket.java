@@ -4,13 +4,18 @@ import org.java_websocket.handshake.ClientHandshake;
 
 import java.net.InetSocketAddress;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+
+import com.google.gson.Gson;
 
 
 
 public class ChatServerWebSocket extends WebSocketServer {
 
+    private ChatLogic chatLogic = new ChatLogic();
     private Set<WebSocket> clients = Collections.synchronizedSet(new HashSet<>());
 
     public ChatServerWebSocket (int port) {
@@ -27,6 +32,13 @@ public class ChatServerWebSocket extends WebSocketServer {
         clients.add(connection);
         System.out.println("New connection from " + connection.getRemoteSocketAddress());
 
+        Map<String, Object> historyMessage = new HashMap<>();
+        historyMessage.put("type", "history");
+        historyMessage.put("payload", chatLogic.getAllMessages());
+
+        String json = new Gson().toJson(historyMessage);
+        connection.send(json);
+
     }
 
     @Override
@@ -37,12 +49,26 @@ public class ChatServerWebSocket extends WebSocketServer {
     }
 
     @Override
-    public void onMessage(WebSocket connection, String message) {
-        System.out.println("Recieved message: " + message);
+    public void onMessage(WebSocket connection, String messageJson) {
+        System.out.println("Recieved message: " + messageJson);
+
+        Gson gson = new Gson();
+        Message incoming  = gson.fromJson(messageJson, Message.class);
+
+        chatLogic.addMessage(incoming.getUser(), incoming.getContent());
+
+        Message saved = chatLogic.getAllMessages()
+            .get(chatLogic.getAllMessages().size() - 1);
+
+        Map<String, Object> outgoing = new HashMap<>();
+        outgoing.put("type", "new-message");
+        outgoing.put("payload", saved);
+
+        String outgoingJson = gson.toJson(outgoing);
 
         synchronized (clients) {
             for (WebSocket client : clients) {
-                client.send(message);
+                client.send(outgoingJson);
             }
         }
     }

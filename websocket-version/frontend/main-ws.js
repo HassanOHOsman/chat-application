@@ -74,8 +74,17 @@ socket.onerror = (err) => {
 };  
 
 socket.onmessage = (event) => {
-  const message = JSON.parse(event.data);
-  addMessage(message);
+  const data = JSON.parse(event.data);
+
+  if (data.type === "history") {
+    state.messages = data.payload;
+    displayMessages();
+  }
+
+  if (data.type === "new-message") {
+    addMessage(data.payload);
+  }
+  
 };
 
 
@@ -124,12 +133,20 @@ function messageFormatter(text) {
   return formattedMessage;
 }
 
+function formatTime(ms) {
+  return new Date(ms).toLocaleTimeString();
+}
+
 // Function to display all messages
 function displayMessages() {
   messageArea.innerHTML = "";
   state.messages.forEach((message) => {
     const userMessage = document.createElement("p");
-    userMessage.innerHTML = `<strong>${message.user}:</strong> [${message.timestamp}]: ${messageFormatter(message.content)}`;
+    userMessage.innerHTML = `
+      <strong>${message.user}:</strong>
+      [${formatTime(message.timestamp)}]:
+      ${messageFormatter(message.content)}
+    `;
     messageArea.append(userMessage);
   });
   messageArea.scrollTop = messageArea.scrollHeight;
@@ -162,7 +179,7 @@ sendButton.addEventListener("click", () => {
   const message = {
     user,
     content,
-    timestamp: new Date().toLocaleTimeString()
+    
   };
 
   socket.send(JSON.stringify(message));

@@ -12,6 +12,10 @@ public class ChatLogic {
 
       }
 
+      public List<Message> getAllMessages() {
+         return new ArrayList<>(messages);
+      }
+
       public List<Message> newMessages(long timestamp) {
          List<Message> recentMessages = new ArrayList<>();
          for (Message message: messages) {
