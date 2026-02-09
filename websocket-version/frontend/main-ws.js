@@ -230,6 +230,7 @@ sendButton.addEventListener("click", () => {
   } 
 
   const message = {
+    type: "message",
     user,
     content,
     
