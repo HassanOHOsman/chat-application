@@ -154,6 +154,21 @@ function displayMessages() {
       </span>
     `;
     messageArea.append(userMessage);
+
+    messageArea.querySelector(".like-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const messageId = btn.dataset.id;
+        sendReaction(messageId, "like");
+      });
+    });
+
+    messageArea.querySelector(".dislike-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const messageId = btn.dataset.id;
+        sendReaction(messageId, "dislike");
+      });
+    });
+
   });
   messageArea.scrollTop = messageArea.scrollHeight;
 }
