@@ -91,8 +91,8 @@ socket.onmessage = (event) => {
     if (message) {
       message.likes = likes;
       message.dislikes = dislikes;
-      displayMessages();
     }
+    updateReactionOnly(messageId, likes, dislikes);
   }
   
 };
@@ -193,6 +193,21 @@ function sendReaction(messageId, reaction) {
     reaction
   };
   socket.send(JSON.stringify(payload));
+}
+
+// helper function for sendReaction
+function updateReactionOnly(messageId, likes, dislikes) {
+
+  const likeBtn = document.querySelector(`.like-btn[data-id="${messageId}"]`);
+  const dislikeBtn = document.querySelector(`.dislike-btn[data-id="${messageId}"]`);
+
+  if (likeBtn) {
+    likeBtn.textContent = `👍 ${likes}`;
+  }
+
+  if (dislikeBtn) {
+    dislikeBtn.textContent = `👎 ${dislikes}`;
+  }
 }
 
 
