@@ -175,6 +175,7 @@ function addMessage(message) {
   displayMessages();
 }
 
+// Function to send a reaction to the server
 function sendReaction(messageId, reaction) {
   const payload = {
     type: "reaction",
