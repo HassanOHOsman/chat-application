@@ -175,6 +175,16 @@ function addMessage(message) {
   displayMessages();
 }
 
+function sendReaction(messageId, reaction) {
+  const payload = {
+    type: "reaction",
+    messageId,
+    reaction
+  };
+  socket.send(JSON.stringify(payload));
+}
+
+
 
 
 // Handle send button click
