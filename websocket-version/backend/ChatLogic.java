@@ -27,7 +27,7 @@ public class ChatLogic {
       }
 
 
-      public Message likMessage(String messageId) {
+      public Message likeMessage(String messageId) {
          for (Message message : messages) {
             if (message.getId().equals(messageId)) {
                message.like();
@@ -37,7 +37,7 @@ public class ChatLogic {
          return null;
       }
 
-      public Message dislikMessage(String messageId) {
+      public Message dislikeMessage(String messageId) {
          for (Message message : messages) {
             if (message.getId().equals(messageId)) {
                message.dislike();
