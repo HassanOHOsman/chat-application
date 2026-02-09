@@ -26,6 +26,29 @@ public class ChatLogic {
          return recentMessages;
       }
 
+
+      public Message likMessage(String messageId) {
+         for (Message message : messages) {
+            if (message.getId().equals(messageId)) {
+               message.like();
+               return message;
+            }
+         }
+         return null;
+      }
+
+      public Message dislikMessage(String messageId) {
+         for (Message message : messages) {
+            if (message.getId().equals(messageId)) {
+               message.dislike();
+               return message;
+            }
+         }
+         return null;
+      }
+
+
+
    }
    
 
