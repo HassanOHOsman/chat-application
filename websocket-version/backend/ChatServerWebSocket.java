@@ -53,24 +53,64 @@ public class ChatServerWebSocket extends WebSocketServer {
         System.out.println("Recieved message: " + messageJson);
 
         Gson gson = new Gson();
-        Message incoming  = gson.fromJson(messageJson, Message.class);
+        Map<String, Object> data = gson.fromJson(messageJson, Map.class);
 
-        chatLogic.addMessage(incoming.getUser(), incoming.getContent());
+        String type = (String) data.get("type");
 
-        Message saved = chatLogic.getAllMessages()
-            .get(chatLogic.getAllMessages().size() - 1);
+        if ("message".equals(type)) {
+            String user = (String) data.get("user");
+            String content = (String) data.get("content");
 
-        Map<String, Object> outgoing = new HashMap<>();
-        outgoing.put("type", "new-message");
-        outgoing.put("payload", saved);
+            chatLogic.addMessage(user, content);
 
-        String outgoingJson = gson.toJson(outgoing);
+            Message saved = chatLogic.getAllMessages()
+                .get(chatLogic.getAllMessages().size() - 1);
 
-        synchronized (clients) {
-            for (WebSocket client : clients) {
-                client.send(outgoingJson);
+            Map<String, Object> outgoing = new HashMap<>();
+            outgoing.put("type", "new-message");
+            outgoing.put("payload", saved);
+
+            String outgoingJson = gson.toJson(outgoing);
+
+            synchronized (clients) {
+                for (WebSocket client : clients) {
+                    client.send(outgoingJson);
+                }
             }
+
+        } else if ("reaction".equals(type)) {
+            String messageId = (String) data.get("messageId");
+            String reaction = (String) data.get("reaction");
+
+            Message updatedMessage = null;
+
+            if ("like".equals(reaction)) {
+                updatedMessage = chatLogic.likeMessage(messageId);
+            } else if ("dislike".equals(reaction)) {
+                updatedMessage = chatLogic.dislikeMessage(messageId);
+            }
+
+            if (updatedMessage != null) {
+                Map<String, Object> payload = new HashMap<>();
+                payload.put("messageId", updatedMessage.getId());
+                payload.put("likes", updatedMessage.getLikes());
+                payload.put("dislikes", updatedMessage.getDislikes());
+
+                Map<String, Object> outgoing = new HashMap<>();
+                outgoing.put("type", "reaction-update");
+                outgoing.put("payload", payload);
+
+                String outgoingJson = gson.toJson(outgoing);
+
+                synchronized (clients) {
+                    for (WebSocket client : clients) {
+                        client.send(outgoingJson);
+                    }
+                }
+            }
+
         }
+
     }
 
     @Override
