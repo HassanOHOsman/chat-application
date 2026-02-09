@@ -84,6 +84,16 @@ socket.onmessage = (event) => {
   if (data.type === "new-message") {
     addMessage(data.payload);
   }
+
+  if (data.type === "reaction-update") {
+    const { messageId, likes, dislikes } = data.payload;
+    const message = state.messages.find(msg => msg.id === messageId);
+    if (message) {
+      message.likes = likes;
+      message.dislikes = dislikes;
+      displayMessages();
+    }
+  }
   
 };
 
