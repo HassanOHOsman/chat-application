@@ -148,6 +148,10 @@ function displayMessages() {
         <span class="chat-content">${messageFormatter(message.content)}</span>
       </span>
       <span class="chat-time">${formatTime(message.timestamp)}</span>
+      <span class=chat-reactions">
+        <button class="like-btn" data-id="${message.id}">👍 ${message.likes}</button>
+        <button class="dislike-btn" data-id="${message.id}">👎 ${message.dislikes}</button>
+      </span>
     `;
     messageArea.append(userMessage);
   });
