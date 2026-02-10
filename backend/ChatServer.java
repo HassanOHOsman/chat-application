@@ -50,6 +50,13 @@ public class ChatServer {
 
             server.createContext("/messages", exchange -> {
                 addCorsHeaders(exchange);
+                usernameMiddleware(exchange);
+
+                if (exchange.getRequestMethod().equalsIgnoreCase("POST")) {
+                    boolean ok = messageMiddleware(exchange);
+                    if (!ok) return;
+                }
+
                 String method = exchange.getRequestMethod();
 
                 // Handle preflight OPTIONS request
