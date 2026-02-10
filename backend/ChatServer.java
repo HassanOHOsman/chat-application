@@ -28,7 +28,7 @@ public class ChatServer {
 
     private static boolean messageMiddleware(HttpExchange exchange) throws IOException {
 
-        If (!exchange.getRequestMethod().equalsIgnoreCase("POST")) return true;
+        if (!exchange.getRequestMethod().equalsIgnoreCase("POST")) return true;
 
         InputStream is = exchange.getRequestBody();
         String body = new String (is.readAllBytes(), StandardCharsets.UTF_8);
