@@ -3,10 +3,12 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
+import java.nio.charset.StandardCharsets;
 
 public class ChatServer {
 
@@ -22,6 +24,24 @@ public class ChatServer {
     private static void usernameMiddleware(HttpExchange exchange) {
         String username = exchange.getRequestHeaders().getFirst("X-Username");
         exchange.setAttribute("username", username);
+    }
+
+    private static boolean messageMiddleware(HttpExchange exchange) throws IOException {
+
+        If (!exchange.getRequestMethod().equalsIgnoreCase("POST")) return true;
+
+        InputStream is = exchange.getRequestBody();
+        String body = new String (is.readAllBytes(), StandardCharsets.UTF_8);
+
+        body = body.trim();
+        if (!body.startsWith("[") || !body.endsWith(("]"))) {
+            exchange.sendResponseHeaders(400, -1);
+            exchange.close();
+            return false;
+        }
+
+        exchange.setAttribute("body", body);
+        return true;
     }
 
     public static void main(String[] args) {
