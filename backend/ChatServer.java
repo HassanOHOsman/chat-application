@@ -67,18 +67,17 @@ public class ChatServer {
 
                 // Handle POST requests
                 if (method.equalsIgnoreCase("POST")) {
-                    String body = new String(exchange.getRequestBody().readAllBytes());
 
                     // Simple JSON parsing (fragile if message contains quotes)
                     String username = (String) exchange.getAttribute("username");
                     String bodyRaw = (String) exchange.getAttribute("body");
-                    String content = body.split("\"content\":\"")[1].split("\"")[0];
+                    String content = bodyRaw.substring(2, bodyRaw.length() - 2);
 
-                    chatLogic.addMessage(user, content);
+                    chatLogic.addMessage(username, content);
 
                     String json = String.format(
                             "{\"user\":\"%s\",\"content\":\"%s\",\"timestamp\":%d}",
-                            user, content, System.currentTimeMillis()
+                            username, content, System.currentTimeMillis()
                     );
 
                     exchange.getResponseHeaders().set("Content-Type", "application/json");
