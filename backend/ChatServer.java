@@ -70,7 +70,8 @@ public class ChatServer {
                     String body = new String(exchange.getRequestBody().readAllBytes());
 
                     // Simple JSON parsing (fragile if message contains quotes)
-                    String user = body.split("\"user\":\"")[1].split("\"")[0];
+                    String username = (String) exchange.getAttribute("username");
+                    String bodyRaw = (String) exchange.getAttribute("body");
                     String content = body.split("\"content\":\"")[1].split("\"")[0];
 
                     chatLogic.addMessage(user, content);
