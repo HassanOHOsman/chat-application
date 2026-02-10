@@ -19,6 +19,11 @@ public class ChatServer {
         exchange.getResponseHeaders().set("Access-Control-Allow-Headers", "Content-Type");
     }
 
+    private static void usernameMiddleware(HttpExchange exchange) {
+        String username = exchange.getRequestHeaders().getFirst("X-Username");
+        exchange.setAttribute("username", username);
+    }
+
     public static void main(String[] args) {
         try {
             HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
