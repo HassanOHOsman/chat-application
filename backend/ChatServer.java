@@ -82,6 +82,12 @@ public class ChatServer {
 
 
                     String bodyRaw = (String) exchange.getAttribute("body");
+
+                    if (bodyRaw.length() < 4) {
+                        exchange.sendResponseHeaders(400, -1);
+                        return;
+                    }
+                    
                     String content = bodyRaw.substring(2, bodyRaw.length() - 2);
 
                     chatLogic.addMessage(username, content);
