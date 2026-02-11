@@ -71,7 +71,7 @@ public class ChatServer {
                     // Simple JSON parsing (fragile if message contains quotes)
                     String username = (String) exchange.getAttribute("username");
                     if (username == null || username.isEmpty()) {
-                        String err = "{\\\"error\\\":\\\"Missing X-Username header\\\"}";
+                        String err = "{\"error\":\"Missing X-Username header\"}";
                         exchange.getResponseHeaders().set("Content-Type", "application/json");
                         exchange.sendResponseHeaders(400, err.getBytes().length);
                         OutputStream os = exchange.getResponseBody();
