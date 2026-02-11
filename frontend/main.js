@@ -189,8 +189,8 @@ sendButton.addEventListener("click", () => {
   } else {
     fetch("http://localhost:8080/messages", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ user, content }),
+      headers: { "Content-Type": "application/json", "X-Username": user },
+      body: JSON.stringify([content]),
     })
       .then((response) => response.json())
       .then(() => {
