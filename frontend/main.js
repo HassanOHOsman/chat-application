@@ -153,7 +153,7 @@ async function getNewMessages() {
 // Load existing messages when the page opens
 window.addEventListener("load", async () => {
   try {
-    const response = await fetch("https://hassanogosman/chat-application-backend.hosting.codeyourfuture.io/messages?since=0");
+    const response = await fetch("https://hassanogosman-chat-application-backend.hosting.codeyourfuture.io/messages?since=0");
     let storedMessages = [];
 
     if (response.status !== 204) {
@@ -187,11 +187,14 @@ sendButton.addEventListener("click", () => {
   } else if (!content) {
     alert("Please enter a message");
   } else {
-    fetch("https://hassanogosman/chat-application-backend.hosting.codeyourfuture.io/messages", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "X-Username": user },
-      body: JSON.stringify([content]),
-    })
+    fetch(
+      "https://hassanogosman-chat-application-backend.hosting.codeyourfuture.io/messages",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-Username": user },
+        body: JSON.stringify([content]),
+      }
+    )
       .then((response) => response.json())
       .then(() => {
         messageInput.value = "";
