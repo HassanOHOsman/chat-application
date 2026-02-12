@@ -59,7 +59,9 @@ const state = {
   messages: [],
 };
 
-const socket = new WebSocket("ws://localhost:8081");
+const socket = new WebSocket(
+  "ws://hassanogosman-chat-app-websocket-backend.hosting.codeyourfuture.io"
+);
 
 socket.onopen = () => {
   console.log("Connected to websocket server");
