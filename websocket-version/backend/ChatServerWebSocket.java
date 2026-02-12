@@ -19,7 +19,7 @@ public class ChatServerWebSocket extends WebSocketServer {
     private Set<WebSocket> clients = Collections.synchronizedSet(new HashSet<>());
 
     public ChatServerWebSocket (int port) {
-        super(new InetSocketAddress(port));
+        super(new InetSocketAddress("0.0.0.0", port));
     }
 
     @Override

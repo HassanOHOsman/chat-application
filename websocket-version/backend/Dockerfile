@@ -1,14 +1,17 @@
-# Use a valid Java 17 slim base image
+# Use Java 17
 FROM eclipse-temurin:17-jdk
 
-# Set working directory inside the container
-WORKDIR /websocket-version/backend
+# Set working directory
+WORKDIR /app
 
-# Copy everthing in backend folder (java + jars files)
+# Copy backend files and jars
 COPY . .
 
 # Compile all Java files recursively
-RUN javac -cp ".:gson-2.10.1.jar:slf4j-api-2.0.9.jar:slf4j-simple-2.0.9.jar:Java-WebSocket-1.6.0.jar" *.java
+RUN javac -cp ".:*.jar" $(find . -name "*.java")
 
-# Run the main class
-CMD ["java", "-cp", ".:gson-2.10.1.jar:slf4j-api-2.0.9.jar:slf4j-simple-2.0.9.jar:Java-WebSocket-1.6.0.jar", "ChatServer"]
+# Expose the port your WebSocket server listens on
+EXPOSE 8081
+
+# Run the WebSocket server
+CMD ["java", "-cp", ".:*.jar", "ChatServerWebSocket"]
