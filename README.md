@@ -3,6 +3,6 @@
 
 
 
-[2. A link to the deployed chat app](https://hassanohosman-chat-application-frontend.hosting.codeyourfuture.io)
+[2. A link to the deployed chat app (Long-polling)](https://hassanohosman-chat-application-frontend.hosting.codeyourfuture.io/)
 
 
