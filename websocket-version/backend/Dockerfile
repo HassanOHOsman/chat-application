@@ -8,7 +8,7 @@ WORKDIR /websocket-version/backend
 COPY . .
 
 # Compile all Java files recursively
-RUN javac -cp ".:gson-2.10.1.jar:slf4j-api-2.0.9.jar:slf4j-simple-2.0.9.jar:javawebsocket.jar" *.java
+RUN javac -cp ".:gson-2.10.1.jar:slf4j-api-2.0.9.jar:slf4j-simple-2.0.9.jar:Java-WebSocket-1.6.0.jar" *.java
 
 # Run the main class
-CMD ["java", "-cp", ".:gson-2.10.1.jar:slf4j-api-2.0.9.jar:slf4j-simple-2.0.9.jar:javawebsocket.jar", "ChatServerWebSocket"]
+CMD ["java", "-cp", ".:gson-2.10.1.jar:slf4j-api-2.0.9.jar:slf4j-simple-2.0.9.jar:Java-WebSocket-1.6.0.jar", "ChatServer"]
