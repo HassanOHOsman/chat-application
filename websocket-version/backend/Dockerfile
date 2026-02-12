@@ -4,11 +4,11 @@ FROM eclipse-temurin:17-jdk
 # Set working directory inside the container
 WORKDIR /websocket-version/backend
 
-# Copy all your Java files
+# Copy everthing in backend folder (java + jars files)
 COPY . .
 
 # Compile all Java files recursively
-RUN javac $(find . -name "*.java")
+RUN javac -cp ".:gson-2.10.1.jar:slf4j-api-2.0.9.jar:slf4j-simple-2.0.9.jar:javawebsocket.jar" *.java
 
 # Run the main class
-CMD ["java", "ChatServer"]
+CMD ["java", "-cp", ".:gson-2.10.1.jar:slf4j-api-2.0.9.jar:slf4j-simple-2.0.9.jar:javawebsocket.jar", "ChatServerWebSocket"]
