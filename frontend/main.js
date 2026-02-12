@@ -127,7 +127,7 @@ let lastTimestamp = 0;
 async function getNewMessages() {
   try {
     const response = await fetch(
-      `http://localhost:8080/messages?since=${lastTimestamp}`
+      `https://hassanogosman-chat-application-backend.hosting.codeyourfuture.io/messages?since=${lastTimestamp}`
     );
     let newMessages = [];
 
