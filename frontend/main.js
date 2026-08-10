@@ -127,7 +127,7 @@ let lastTimestamp = 0;
 async function getNewMessages() {
   try {
     const response = await fetch(
-      `https://hassanogosman-chat-application-backend.hosting.codeyourfuture.io/messages?since=${lastTimestamp}`
+      `https://hassanohosman-chat-app-websocket-backend.trainees.hosting.cyf.academy/messages?since=${lastTimestamp}`
     );
     let newMessages = [];
 
@@ -153,7 +153,7 @@ async function getNewMessages() {
 // Load existing messages when the page opens
 window.addEventListener("load", async () => {
   try {
-    const response = await fetch("https://hassanogosman-chat-application-backend.hosting.codeyourfuture.io/messages?since=0");
+    const response = await fetch("https://hassanohosman-chat-app-websocket-backend.trainees.hosting.cyf.academy/messages?since=0");
     let storedMessages = [];
 
     if (response.status !== 204) {

@@ -60,7 +60,7 @@ const state = {
 };
 
 const socket = new WebSocket(
-  "wss://hassanogosman-chat-app-websocket-backend.hosting.codeyourfuture.io/");
+  "wss://hassanohosman-chat-app-websocket-backend.trainees.hosting.cyf.academy/");
 
 socket.onopen = () => {
   console.log("Connected to websocket server");
