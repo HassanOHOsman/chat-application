@@ -2,7 +2,7 @@
 
 A client-server messaging application that lets multiple users chat in real time. A Java backend and a JavaScript frontend communicate over WebSockets, so messages appear instantly without refreshing the page.
 
-**Live demo:** [QuickChat](https://hassanohosman-chat-app-websocket-frontend.trainees.hosting.cyf.academy/)
+**Live demo:** [QuickChat](https://hassanohosman-chat-app-websocket-frontend.grads.hosting.cyf.academy/)
 
 ## Features
 
